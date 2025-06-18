@@ -13,6 +13,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
+    "classnames": "^2.5.1",
+    "install": "^0.13.0",
+    "lucide-react": "^0.517.0",
+    "pnpm": "^10.12.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.10",
