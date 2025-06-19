@@ -1,8 +1,8 @@
-import type React from 'react'
+import React from 'react'
 import type { IIconButton } from './types'
 import classNames from 'classnames'
 
-const IconButton : React.FC<IIconButton> = ({ icon : Icon, ...rest }) => {
+const IconButton = React.forwardRef<HTMLButtonElement, IIconButton>(({ icon : Icon, ...rest }, ref) => {
   return (
     <button
       {...rest}
@@ -12,8 +12,9 @@ const IconButton : React.FC<IIconButton> = ({ icon : Icon, ...rest }) => {
         'text-gray-600 hover:text-blue-400',
         rest.className
       )}
+      ref={ref}
     ><Icon /></button>
   )
-}
+})
 
 export default IconButton
