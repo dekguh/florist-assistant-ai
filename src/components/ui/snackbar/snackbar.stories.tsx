@@ -3,13 +3,7 @@ import Snackbar from './snackbar'
 import UseSnackbar from './use-snackbar'
 
 const Meta = {
-  component: Snackbar,
-  argTypes: {
-    variant: {
-      options: ['success', 'warning', 'danger', 'info'],
-      control: { type: 'select' }
-    }
-  }
+  component: Snackbar
 } satisfies Meta<typeof Snackbar>
 
 export default Meta
@@ -22,6 +16,12 @@ export const Default : Story = {
     title: '',
     message: 'test message information here',
     onCloseClick: () => console.log('clicked')
+  },
+  argTypes: {
+    variant: {
+      options: ['success', 'warning', 'danger', 'info'],
+      control: { type: 'select' }
+    }
   }
 }
 
