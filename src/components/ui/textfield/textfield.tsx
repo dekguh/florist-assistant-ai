@@ -2,7 +2,7 @@ import React from 'react'
 import type { ITextfield } from './types'
 import classNames from 'classnames'
 
-const Textfield = React.forwardRef<HTMLInputElement, ITextfield>(({ rootClassName, ...rest }, ref) => {
+const Textfield = React.forwardRef<HTMLInputElement, ITextfield>(({ rootClassName, value, ...rest }, ref) => {
   return (
     <div className={classNames(rootClassName)}>
       <input
@@ -13,6 +13,7 @@ const Textfield = React.forwardRef<HTMLInputElement, ITextfield>(({ rootClassNam
           'focus:outline-0 text-gray-500 w-full',
           rest?.className
         )}
+        value={value}
       />
     </div>
   )
