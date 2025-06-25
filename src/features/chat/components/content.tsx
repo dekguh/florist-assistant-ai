@@ -26,13 +26,13 @@ const Content = () => {
   console.log({ textMessage })
 
   return (
-    <div className='h-full'>
+    <div className='flex-1 flex flex-col'>
       <ChatHeader
         title='Florist Assistant'
         description='Will help you to help choose best flowers stuff for your lovely'
       />
 
-      <div className='bg-[#001A52] h-full rounded-b-[16px] flex flex-col'>
+      <div className='bg-[#001A52] flex-1 rounded-b-[16px] flex flex-col'>
         <div className='flex-1 overflow-auto p-5 flex flex-col gap-3'>
           {chatHistory.map((item, index) => (
             <div
@@ -59,6 +59,9 @@ const Content = () => {
               setTextMessage(event.target.value)
             }}
             value={textMessage}
+            onKeyDown={event => {
+              if (event.code === 'Enter') handleSendClick()
+            }}
           />
 
           <IconButton

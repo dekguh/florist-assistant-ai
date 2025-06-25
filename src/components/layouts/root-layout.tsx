@@ -8,7 +8,7 @@ interface IRootLayout {
 const RootLayout : React.FC<IRootLayout> = ({ children }) => {
   return (
     <div
-      className='h-[100vh] bg-no-repeat bg-cover'
+      className='h-[100vh] bg-no-repeat bg-cover py-6 px-4 flex flex-col items-center justify-center overflow-hidden'
       style={{
         backgroundImage: `url("${bgRootLayout}")`
       }}
