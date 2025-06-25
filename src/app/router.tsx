@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
+import AppRoot from './routes/app/root'
 
 const extractProps = (module: {[key: string]: unknown;}) => {
   const { ...rest } = module
@@ -12,8 +13,13 @@ const extractProps = (module: {[key: string]: unknown;}) => {
 const generateRouter = () => {
   return createBrowserRouter([
     {
-      path: '/',
-      lazy: () => import('@/app/routes/home').then(extractProps)
+      Component: AppRoot,
+      children: [
+        {
+          path: '/',
+          lazy: () => import('@/app/routes/app/home').then(extractProps)
+        }
+      ]
     }
   ])
 }
