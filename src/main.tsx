@@ -4,7 +4,7 @@ import './index.css'
 import App from './app'
 import { mirageServer } from './lib/mirage'
 
-if (import.meta.env.ENVIRONMENT === 'DEVELOPMENT') {
+if (import.meta.env.VITE_MODE_API === 'DEVELOPMENT') {
   mirageServer({ environment: 'development' })
 }
 
