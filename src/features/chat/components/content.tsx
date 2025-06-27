@@ -7,23 +7,47 @@ import { useChatStore } from '../stores/chat-store'
 import classNames from 'classnames'
 import { isAiUser } from '../utils/utils'
 import { useState } from 'react'
+import { useChatHistory } from '../apis/get-chat-history'
+import { createChatHistorySchema, useCreateChatHistory } from '../apis/create-chat-history'
+import { has } from 'lodash'
+import type { TObjectChat } from '../types/types'
 
 const Content = () => {
   const { chatHistory, addMessageHistory } = useChatStore()
+  
+  // APIS
+  const { data: chatHistoryData, isLoading } = useChatHistory({ refetchInterval: 1000 * 30 })
+  const chatHistoryMutation = useCreateChatHistory(
+    {},
+    (data) => {
+      if (has(data, 'id')) {
+        const tempData = data as TObjectChat
+        addMessageHistory(tempData)
+      }
+    }
+  )
 
   // STATES
   const [textMessage, setTextMessage] = useState<string>('')
 
-  const handleSendClick = () => {
-    addMessageHistory({
+  console.log({ chatHistoryData, isLoading })
+
+  const handleSendClick = async () => {
+    const paramsCreate = {
       name: 'User',
       message: textMessage,
       userType: 'USER'
-    })
-    setTextMessage('')
-  }
+    }
 
-  console.log({ textMessage })
+    if (createChatHistorySchema.parse(paramsCreate)) {
+      await chatHistoryMutation.mutate({
+        name: 'User',
+        message: textMessage,
+        userType: 'USER'
+      })
+      setTextMessage('')
+    }
+  }
 
   return (
     <div className='flex-1 flex flex-col'>
