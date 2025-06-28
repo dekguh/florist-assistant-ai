@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Textfield from '@/components/ui/textfield/textfield'
 import ChatHeader from './chat-header'
 import IconButton from '@/components/ui/icon-button/icon-button'
@@ -5,18 +6,17 @@ import { Send } from 'lucide-react'
 import ChatBubble from './chat-bubble'
 import { useChatStore } from '../stores/chat-store'
 import classNames from 'classnames'
-import { isAiUser } from '../utils/utils'
+import { generateId, isAiUser } from '../utils/utils'
 import { useState } from 'react'
-import { useChatHistory } from '../apis/get-chat-history'
 import { createChatHistorySchema, useCreateChatHistory } from '../apis/create-chat-history'
 import { has } from 'lodash'
 import type { TObjectChat } from '../types/types'
+import { useSendChatAgentMessage } from '../apis/send-chat-agent'
 
 const Content = () => {
   const { chatHistory, addMessageHistory } = useChatStore()
   
   // APIS
-  const { data: chatHistoryData, isLoading } = useChatHistory({ refetchInterval: 1000 * 30 })
   const chatHistoryMutation = useCreateChatHistory(
     {},
     (data) => {
@@ -26,11 +26,20 @@ const Content = () => {
       }
     }
   )
+  const chatAgentMutation = useSendChatAgentMessage({
+    onSuccess: (data: any) => {
+      console.log(data.output)
+      addMessageHistory({
+        id: generateId(chatHistory),
+        message: data.output,
+        userType: 'AI',
+        name: 'Florista'
+      })
+    }
+  })
 
   // STATES
   const [textMessage, setTextMessage] = useState<string>('')
-
-  console.log({ chatHistoryData, isLoading })
 
   const handleSendClick = async () => {
     const paramsCreate = {
@@ -45,12 +54,18 @@ const Content = () => {
         message: textMessage,
         userType: 'USER'
       })
+
+      await chatAgentMutation.mutate({
+        chatId: 1,
+        prompt: textMessage,
+        action: 'subcribe'
+      })
       setTextMessage('')
     }
   }
 
   return (
-    <div className='flex-1 flex flex-col'>
+    <div className='flex-1 flex flex-col max-w-[480px]'>
       <ChatHeader
         title='Florist Assistant'
         description='Will help you to help choose best flowers stuff for your lovely'

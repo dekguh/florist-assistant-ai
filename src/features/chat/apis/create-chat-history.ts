@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as z from 'zod'
-import type { GetMutationConfig, TErrorReturn, TObjectChat } from '../types/types'
+import type { TObjectChat } from '../types/types'
 import { axiosApi } from '@/lib/axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { chatHistoryQueryOptions } from './get-chat-history'
+import type { GetMutationConfig, TErrorReturn } from '@/types/types'
 
 export const createChatHistorySchema = z.object({
   message: z.string(),
