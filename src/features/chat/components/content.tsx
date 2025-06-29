@@ -33,7 +33,7 @@ const Content = () => {
         id: generateId(chatHistory),
         message: data.output,
         userType: 'AI',
-        name: 'Florista'
+        name: 'AI'
       })
     }
   })
@@ -65,13 +65,13 @@ const Content = () => {
   }
 
   return (
-    <div className='flex-1 flex flex-col max-w-[480px]'>
+    <div className='flex-1 flex flex-col max-w-[480px] overflow-hidden'>
       <ChatHeader
         title='Florist Assistant'
         description='Will help you to help choose best flowers stuff for your lovely'
       />
 
-      <div className='bg-[#001A52] flex-1 rounded-b-[16px] flex flex-col'>
+      <div className='bg-[#001A52] flex-1 rounded-b-[16px] flex flex-col overflow-scroll'>
         <div className='flex-1 overflow-auto p-5 flex flex-col gap-3'>
           {chatHistory.map((item, index) => (
             <div
